@@ -1,0 +1,51 @@
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pg_db:/var/lib/postgresql/data
+    networks:
+      - default
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    env_file:
+      - .env
+    networks:
+      - default
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      - default
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    networks:
+      - default
+    depends_on:
+      - mongo
+
+volumes:
+  pg_db:
+  mongo_db:
+
+networks:
+  default:
+    driver: bridge
