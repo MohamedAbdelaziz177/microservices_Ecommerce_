@@ -1,5 +1,6 @@
 package com.abdelaziz26.Ecommerce.Customer;
 
+import org.apache.commons.lang.NullArgumentException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -8,6 +9,10 @@ import java.util.UUID;
 public class CustomerMapper {
 
     public CustomerResponse toCustomerResponse(Customer customer){
+
+        if(customer == null)
+            throw new  NullArgumentException("Customer Cannot be null");
+
         return CustomerResponse.builder()
                 .id(customer.getId())
                 .firstName(customer.getFirstName())
@@ -19,6 +24,10 @@ public class CustomerMapper {
     }
 
     public Customer toCustomer(CustomerRequest request){
+
+        if(request == null)
+            throw new  NullArgumentException("Customer Request cannot be null");
+
         return Customer.builder()
                 .id(UUID.randomUUID().toString())
                 .firstName(request.getFirstName())
